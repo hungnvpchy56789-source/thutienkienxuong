@@ -1,0 +1,16 @@
+{
+  "cap_nhat_luc": "10/06/2026 08:50:36",
+  "tong_so": 2,
+  "users": [
+    {
+      "username": "npc\\TrangDT",
+      "ho_ten": "Đặng Trang",
+      "pass_hash": "8988d32d4b864321205c63beca0aca1f2d7a0bd1536eb34853ece044332edcbf"
+    },
+    {
+      "username": "test",
+      "ho_ten": "abc",
+      "pass_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
+    }
+  ]
+}
