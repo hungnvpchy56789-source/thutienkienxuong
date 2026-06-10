@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "10/06/2026 10:10:12",
-  "tong_so": 4,
+  "cap_nhat_luc": "10/06/2026 16:03:33",
+  "tong_so": 5,
   "users": [
     {
       "username": "npc\\TrangDT",
@@ -20,6 +20,11 @@
     {
       "username": "npc\\TrangDT6",
       "ho_ten": "Đặng Thị Trang",
+      "pass_hash": "ca76f777c1853a3f797b9d3175cf9990bc48d467658d5801b6960da9e3fd70ed"
+    },
+    {
+      "username": "npc\\HuyNQ13",
+      "ho_ten": "Nguyễn Quang Huy",
       "pass_hash": "ca76f777c1853a3f797b9d3175cf9990bc48d467658d5801b6960da9e3fd70ed"
     }
   ]
