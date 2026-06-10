@@ -416,9 +416,10 @@ function khoiDongDangNhap() {
                         <div class="flex items-center gap-2">
                             <span class="font-bold text-slate-700 text-xs uppercase">5. LÃNH ĐẠO KÝ:</span>
                             <select id="select-lanh-dao" class="bg-white border border-slate-300 text-slate-700 font-bold px-2 py-1.5 rounded-lg shadow-sm focus:border-evnBlue outline-none text-xs md:text-sm w-44 border-l-4 border-l-blue-500">
-                                <option value="Hoàng Mạnh Cường">Hoàng Mạnh Cường</option>
-                                <option value="Nguyễn Minh Khương">Nguyễn Minh Khương</option>
-                                <option value="Nguyễn Hải Long">Nguyễn Hải Long</option>
+                                <option value="Vũ Hữu Hưng">Vũ Hữu Hưng</option>
+                                <option value="Nguyễn Minh Tuấn">Nguyễn Minh Tuấn</option>
+                                <option value="Nguyễn Đình Ảnh">Nguyễn Đình Ảnh</option>
+                                <option value="Phạm Ngọc Thành">Phạm Ngọc Thành</option>
                             </select>
                         </div>
                         <div class="w-px h-5 bg-slate-300 hidden md:block mx-1"></div>
@@ -1087,33 +1088,49 @@ let dataTableTongHop = null;
 // 1. Danh sách tên TNV theo từng tổ (lấy đúng từ file chia_tổ.txt, phần tên sau mã số)
 // So khớp không phân biệt hoa/thường, chuẩn hóa khoảng trắng
 const TEN_TO_1 = [
-    "thu đồng thanh",
-    "thu dũng nghĩa",
-    "thu hiệp hòa",
-    "thu hòa bình",
-    "thu hồng lý",
-    "thu minh khai",
-    "thu minh lãng",
-    "thu minh quang",
-    "thu song lãng",
-    "thu tam quang",
-    "thu việt hùng",
-    "thu xuân hòa",
-    "thu thị trấn"
+    "thu Vũ Thắng",
+    "thu Quang Lịch",
+    "thu Quốc Tuấn",
+    "thu An Bình",
+    "thu Bình Nguyên",
+    "thu Trà Giang",
+    "thu Vũ Ninh",
+    "thu Vũ Quý",
+    "thu Thượng Hiền",
+    "thu Đình Phùng",
+    "thu Vũ Lễ",
+    "thu Hòa Bình",
+    "thu Thanh Tân",
+    "thu Quyết Tiến",
+    "thu Vũ An",
+    "thu Lê Lợi",
+    "thu Hồng Thái",
+    "thu Vũ Trung",
+    "thu Nam Cao",
 ];
 
 const TEN_TO_2 = [
-    "thu duy nhất",
-    "thu tân lập",
-    "thu tự tân",
-    "thu việt thuận",
-    "thu vũ đoài",
-    "thu vũ hội",
-    "thu vũ vân",
-    "thu vũ vinh",
-    "thu bách thuận",
-    "thu hồng phong",
-    "thu vũ tiến"
+    "thu Quang Trung",
+    "thu Quang Bình",
+    "thu Thị Trấn",
+    "thu Bình Thanh",
+    "thu Minh Tân",
+    "thu Vũ Bình",
+    "thu Quang Minh",
+    "thu Hồng Tiến",
+    "thu Bình Minh",
+    "thu Minh Hưng",
+    "thu Nam Bình",
+    "thu Vũ Hòa",
+    "thu Quang Hưng",
+    "thu Hòa Bình",
+    "thu Bình Định",
+    "thu Hòa Bình",
+    "thu Vũ Công",
+    "thu An Bồi",
+    "thu XN Thủy Nông",
+    "thu KDDV",
+    "thu Uỷ Nhiệm Chi"
 ];
 
 // 2. Hàm phân loại tổ — so khớp tên TNV (không phân biệt hoa/thường)
