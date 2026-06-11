@@ -221,7 +221,6 @@ function khoiDongDangNhap() {
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
-<!-- MAN HINH DANG NHAP: chi khoa ngoai, khong thay doi logic cac tab -->
 <div id="man-hinh-dang-nhap" class="fixed inset-0 z-[10000] bg-slate-900/90 flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
         <div class="bg-gradient-to-r from-evnBlue to-evnDark px-6 py-5 text-white">
@@ -248,7 +247,7 @@ function khoiDongDangNhap() {
     </div>
 </div>
 
-<div id="banner-nhac-bai" class="hidden fixed top-0 left-0 w-full bg-yellow-300 border-b-4 border-yellow-500 shadow-2xl z-[9999] p-3 md:p-4 justify-between items-center animate-[slideDown_0.3s_ease-out]">
+<div id="banner-nhac-bai" class="hidden fixed top-0 left-0 w-full bg-yellow-300 border-b-4 border-yellow-500 shadow-2xl z-[9999] p-3 md:p-4 justify-between items-center">
     <div class="flex-1">
         <p class="text-[10px] md:text-[12px] font-bold text-yellow-800 uppercase tracking-wider mb-1 flex items-center gap-1">
             <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -570,7 +569,6 @@ let dictGhiChu = {};
 
 function khoiTaoCacheTick() {
     let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    // B?n n?ng c?p: gi? tick ?? ??c n? b?n tr?n m?y, kh?ng t? x?a khi sang ng?y m?i.
     danhSachTickCache = new Set(data.dsMaKH || []);
     dictGhiChu = JSON.parse(localStorage.getItem(STORAGE_NOTE_KEY) || '{}');
 }
@@ -597,10 +595,6 @@ $.fn.dataTable.ext.type.order['natural-asc'] = function (a, b) { return String(a
 $.fn.dataTable.ext.type.order['natural-desc'] = function (a, b) { return String(b).localeCompare(String(a), undefined, {numeric: true, sensitivity: 'base'}); };
 
 const COT_CAN_AN = ['địa chỉ', 'dia chi', 'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên', 'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam', 'loại hóa đơn', 'loai hoa don', 'ngày phát hành', 'ngay phat hanh'];
-
-
-
-
 
 function timGiaTriTheoTuKhoa(row, keywords) {
     if (!row) return '';
@@ -799,7 +793,6 @@ async function taiDuLieuDuNo() {
         $('#bang-duno tbody').off('click', '.btn-chia-se').on('click', '.btn-chia-se', function() {
             let ma = $(this).data('makh');
             let baoCao = layDuLieuBaoCaoZalo(ma, { ten: $(this).data('ten'), tram: $(this).data('tram'), cot: $(this).data('cot') });
-            let ten = baoCao.ten || $(this).data('ten') || '';
             let msg = `[\u0110I\u1EC6N L\u1EF0C V\u0168 TH\u01AF]\n- T\u00EAn KH: ${baoCao.ten || ''}\n- M\u00E3 KH: ${baoCao.ma || ''}\n- S\u1ED5 GCS: ${baoCao.soGCS || ''}\n- S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i: ${baoCao.sdt || ''}\n- Tr\u1EA1m: ${baoCao.tram || ''} / C\u1ED9t: ${baoCao.cot || ''}\n- S\u1ED1 Ti\u1EC1n N\u1EE3: ${baoCao.tien || ''}\n- Ghi ch\u00FA: ${baoCao.ghiChu || ''}`;
             let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (navigator.share && isMobile) {
@@ -809,10 +802,8 @@ async function taiDuLieuDuNo() {
             }
         });
 
-        // HÀM LỌC CHUNG CHO BẢNG DƯ NỢ VÀ BẢNG IN
         $.fn.dataTable.ext.search.length = 0;
         
-        // Lọc cho Dư Nợ
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) { 
             if (settings.nTable.id !== 'bang-duno') return true; 
             if (nguongLocTien === 0 || !cotTien_global) return true; 
@@ -821,7 +812,6 @@ async function taiDuLieuDuNo() {
             return val >= nguongLocTien; 
         });
 
-        // Lọc Tiền riêng cho Bảng In
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) { 
             if (settings.nTable.id !== 'bang-in-tb') return true; 
             if (nguongLocTienIn === 0 || !cotTien_global) return true; 
@@ -872,7 +862,6 @@ function khoiTaoBangInTB() {
     });
 }
 
-// BỘ LỌC CHO BẢNG IN THÔNG BÁO NỢ ĐỘC LẬP
 $(document).ready(function() {
     $('#sort-tram-in').on('change', function() { 
         if ($(this).is(':checked')) { 
@@ -912,11 +901,10 @@ function locTienIn(nguong, btn) {
 
 function xuatExcelTheoDieuKien() { if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; } const tenTNV = $('#filter-tnv').val() || 'TatCa'; const tenFile = `DuNo_VuThu_${tenTNV.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`; const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray(); if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; } const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); const duLieuXuat = []; duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); rows.forEach(row => { duLieuXuat.push(dsKeyXuat.map(k => { let val = row[k]; return (val !== null && val !== undefined) ? val : ''; })); }); try { const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet(duLieuXuat); XLSX.utils.book_append_sheet(wb, ws, 'DuNo'); XLSX.writeFile(wb, tenFile); } catch (error) { console.error("Lỗi Excel: ", error); alert("Sếp ơi, quá trình xuất Excel bị lỗi. Sếp thử tải lại trang (F5) nhé!"); } }
 
-
 function boDauTenCot(value) {
     return String(value || '')
         .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
+        .replace(/[\u0300-\u036f]/g, '')
         .replace(/đ/g, 'd')
         .replace(/Đ/g, 'D')
         .toLowerCase()
@@ -1001,21 +989,19 @@ function inThongBaoTienDien() {
         return; 
     }
 
-    // Lấy thông tin từ giao diện
     let nguoiGui = document.getElementById('input-nguoi-gui').value.trim();
     let lanhDao = document.getElementById('select-lanh-dao').value;
     let tieuDeLanhDao = (lanhDao === "Hoàng Mạnh Cường") 
                         ? "TRƯỞNG ĐIỆN LỰC" 
                         : "KT.TRƯỞNG ĐIỆN LỰC<br>PHÓ TRƯỞNG ĐIỆN LỰC";
 
-    // Xử lý Ngày In, Ngày Hết Hạn và Ngày Cắt
     let valNgayIn = document.getElementById('input-ngay-in').value;
     let valNgayHetHan = document.getElementById('input-ngay-het-han').value;
     let valNgayCat = document.getElementById('input-ngay-cat').value;
     
-    let dateIn = valNgayIn ? new Date(valNgayIn) : new Date(); // Mặc định là hôm nay
-    let dateHetHan = valNgayHetHan ? new Date(valNgayHetHan) : new Date(dateIn.getTime()); // Mặc định bằng ngày in
-    let dateCat = valNgayCat ? new Date(valNgayCat) : new Date(dateIn.getTime() + 86400000); // Mặc định cộng thêm 1 ngày so với ngày in
+    let dateIn = valNgayIn ? new Date(valNgayIn) : new Date(); 
+    let dateHetHan = valNgayHetHan ? new Date(valNgayHetHan) : new Date(dateIn.getTime()); 
+    let dateCat = valNgayCat ? new Date(valNgayCat) : new Date(dateIn.getTime() + 86400000); 
     
     let strNgayIn = `ngày <span style="font-weight:bold;">${dateIn.getDate().toString().padStart(2,'0')}</span> tháng <span style="font-weight:bold;">${dateIn.getMonth() + 1}</span> năm <span style="font-weight:bold;">${dateIn.getFullYear()}</span>`;
     let strNgayHetHan = `ngày <span style="font-weight:bold;">${dateHetHan.getDate().toString().padStart(2,'0')}</span> tháng <span style="font-weight:bold;">${dateHetHan.getMonth() + 1}</span> năm <span style="font-weight:bold;">${dateHetHan.getFullYear()}</span>`;
@@ -1063,7 +1049,6 @@ function inThongBaoTienDien() {
     
     setTimeout(() => { 
         document.body.classList.remove('dang-in-thong-bao'); 
-        // Tự động bỏ tích chọn in sau khi tắt cửa sổ in
         dataTableInTB.$('.chk-in-no:checked').prop('checked', false).trigger('change');
         $('#chk-master-in').prop('checked', false);
     }, 1000);
@@ -1085,72 +1070,69 @@ function setupChuKyIn() {
 // =========================================================
 let dataTableTongHop = null;
 
-// 1. Danh sách tên TNV theo từng tổ (lấy đúng từ file chia_tổ.txt, phần tên sau mã số)
-// So khớp không phân biệt hoa/thường, chuẩn hóa khoảng trắng
 const TEN_TO_1 = [
-    "thu Vũ Thắng",
-    "thu Quang Lịch",
-    "thu Quốc Tuấn",
-    "thu An Bình",
-    "thu Bình Nguyên",
-    "thu Trà Giang",
-    "thu Vũ Ninh",
-    "thu Vũ Quý",
-    "thu Thượng Hiền",
-    "thu Đình Phùng",
-    "thu Vũ Lễ",
-    "thu Hòa Bình",
-    "thu Thanh Tân",
-    "thu Quyết Tiến",
-    "thu Vũ An",
-    "thu Lê Lợi",
-    "thu Hồng Thái",
-    "thu Vũ Trung",
-    "thu Nam Cao",
+    "thu vu thang",
+    "thu quang lich",
+    "thu quoc tuan",
+    "thu an binh",
+    "thu binh nguyen",
+    "thu tra giang",
+    "thu vu ninh",
+    "thu vu quy",
+    "thu thuong hien",
+    "thu dinh phung",
+    "thu vu le",
+    "thu hoa binh",
+    "thu thanh tan",
+    "thu quyet tien",
+    "thu vu an",
+    "thu le loi",
+    "thu hong thai",
+    "thu vu trung",
+    "thu nam cao",
 ];
 
 const TEN_TO_2 = [
-    "thu Quang Trung",
-    "thu Quang Bình",
-    "thu Thị Trấn",
-    "thu Bình Thanh",
-    "thu Minh Tân",
-    "thu Vũ Bình",
-    "thu Quang Minh",
-    "thu Hồng Tiến",
-    "thu Bình Minh",
-    "thu Minh Hưng",
-    "thu Nam Bình",
-    "thu Vũ Hòa",
-    "thu Quang Hưng",
-    "thu Hòa Bình",
-    "thu Bình Định",
-    "thu Hòa Bình",
-    "thu Vũ Công",
-    "thu An Bồi",
-    "thu XN Thủy Nông",
-    "thu KDDV",
-    "thu Uỷ Nhiệm Chi"
+    "thu quang trung",
+    "thu quang binh",
+    "thu thi tran",
+    "thu binh thanh",
+    "thu minh tan",
+    "thu vu binh",
+    "thu quang minh",
+    "thu hong tien",
+    "thu binh minh",
+    "thu minh hung",
+    "thu nam binh",
+    "thu vu hoa",
+    "thu quang hung",
+    "thu binh dinh",
+    "thu vu cong",
+    "thu an boi",
+    "thu xn thuy nong",
+    "thu kddv",
+    "thu uy nhiem chi"
 ];
 
-// 2. Hàm phân loại tổ — so khớp tên TNV (không phân biệt hoa/thường)
+// Hàm phân loại tổ đã được fix triệt để lỗi không nhận diện được chữ tiếng Việt
 function layTenTo(tenTNV) {
     if (!tenTNV) return "";
-    // Chuẩn hóa: chữ thường, bỏ khoảng trắng thừa
-    let tnvChuan = String(tenTNV).toLowerCase().trim().replace(/\s+/g, ' ');
+    // Tiến hành chuẩn hóa string sang không dấu, viết thường giống hệt hàm boDauTenCot
+    let tnvChuan = String(tenTNV)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'D')
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, ' ');
 
-    // Kiểm tra khớp chính xác toàn bộ tên
-    if (TEN_TO_1.includes(tnvChuan)) return "1. TỔ SẢN XUẤT 1";
-    if (TEN_TO_2.includes(tnvChuan)) return "2. TỔ SẢN XUẤT 2";
+    if (TEN_TO_1.includes(tnvChuan) || TEN_TO_1.some(t => tnvChuan.includes(t))) return "1. TỔ SẢN XUẤT 1";
+    if (TEN_TO_2.includes(tnvChuan) || TEN_TO_2.some(t => tnvChuan.includes(t))) return "2. TỔ SẢN XUẤT 2";
 
-    // Thử khớp một phần (phòng trường hợp tên có thêm ký tự lạ)
-    if (TEN_TO_1.some(t => tnvChuan.includes(t))) return "1. TỔ SẢN XUẤT 1";
-    if (TEN_TO_2.some(t => tnvChuan.includes(t))) return "2. TỔ SẢN XUẤT 2";
-
-    return "";
+    return "3. CHƯA PHÂN TỔ";
 }
 
-// 3. Hàm cập nhật Tab Tổng hợp (Giống hệt logic file Index)
 function capNhatTabTongHop() {
     if (!dataTableDuNo) { taiDuLieuDuNo(); return; }
     
@@ -1162,7 +1144,6 @@ function capNhatTabTongHop() {
         let tien = parseFloat(String(row[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
         
         let tenTo = layTenTo(tnv);
-        if (!tenTo) return;
 
         if (!summary[tnv]) {
             summary[tnv] = { 
@@ -1178,12 +1159,9 @@ function capNhatTabTongHop() {
     
     let summaryArray = Object.values(summary).sort((a, b) => a.tenTo.localeCompare(b.tenTo));
     
-    // ===== GẮN SỰ KIỆN CLICK CHO NÚT "XEM" — chỉ gắn 1 lần, dùng event delegation =====
-    // (Đặt ở đây để chắc chắn được chạy ngay cả khi DataTable đã tồn tại từ trước)
     $('#bang-tong-hop').off('click', '.btn-xem-tnv').on('click', '.btn-xem-tnv', function() {
-        const tenTNV = $(this).data('tnv');           // Lấy tên TNV từ thuộc tính data-tnv
-        chuyenTab('du-no');                            // Chuyển sang tab Báo cáo Dư nợ
-        // Đặt giá trị dropdown lọc TNV rồi kích hoạt event change để bảng tự lọc
+        const tenTNV = $(this).data('tnv');          
+        chuyenTab('du-no');                            
         $('#filter-tnv').val(tenTNV).trigger('change');
     });
 
@@ -1208,7 +1186,6 @@ function capNhatTabTongHop() {
                 startRender: function (rows, group) {
                     let totalHD = rows.data().pluck('soHD').reduce((a, b) => a + b, 0);
                     let totalTien = rows.data().pluck('tongTien').reduce((a, b) => a + b, 0);
-                    // Style thanh tiêu đề nhóm giống file index.html
                     return $('<tr/>').append('<td colspan="5" style="background-color: #e2e8f0; font-weight: 900; color: #002B54; border-top: 2px solid #94a3b8; border-bottom: 2px solid #94a3b8; padding: 10px !important;">' + group + ' — (Tổng: ' + rows.count() + ' NV | ' + totalHD + ' HĐ | ' + new Intl.NumberFormat('vi-VN').format(totalTien) + ' đ)</td>');
                 }
             },
@@ -1224,12 +1201,11 @@ function capNhatTabTongHop() {
         });
     }
 }
-// Khởi chạy ngay khi mở web
+
+// Khởi chạy hệ thống
 setupChuKyIn();
 khoiDongDangNhap(); 
-// Đã tắt chế độ tự động load mỗi 60 giây: setInterval(taiDuLieuDuNo, 60000);
 kiemTraNgayKhoa();
 </script>
 </body>
 </html>
-
