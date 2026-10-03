@@ -1,12 +1,7 @@
 {
-  "cap_nhat_luc": "07/08/2026 16:16:49",
+  "cap_nhat_luc": "03/10/2026 14:20:27",
   "tong_so": 5,
   "users": [
-    {
-      "username": "test",
-      "ho_ten": "abc",
-      "pass_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
-    },
     {
       "username": "npc\\NgocPT4",
       "ho_ten": "Phạm Thị Ngọc",
@@ -26,6 +21,11 @@
       "username": "npc\\TuND4",
       "ho_ten": "TuAnh",
       "pass_hash": "2426311f87bfaa0cbcea8b48fabe3b649a2ba3af397fa0875f6dea56fc707163"
+    },
+    {
+      "username": "kd",
+      "ho_ten": "kinhdoanh",
+      "pass_hash": "bbca0be434e498098e08cb4ad1791256f501c7f23fee76e8c3d254726abce816"
     }
   ]
 }
