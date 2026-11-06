@@ -1063,7 +1063,53 @@ function setupChuKyIn() {
     $('#input-nguoi-gui').on('input', function() { localStorage.setItem('evn_nguoi_gui_vt', this.value); });
     $('#select-lanh-dao').on('change', function() { localStorage.setItem('evn_lanh_dao_vt', this.value); });
 }
+# Chuẩn hóa tên cột chính xác theo index.html yêu cầu
+KEY_MAPPING = {
+    "mã kh": "Mã khách hàng",
+    "ma kh": "Mã khách hàng",
+    "mã khách hàng": "Mã khách hàng",
+    "tên kh": "Tên khách hàng",
+    "ten kh": "Tên khách hàng",
+    "tên khách hàng": "Tên khách hàng",
+    "tổng tiền": "Tổng tiền",
+    "tong tien": "Tổng tiền",
+    "số tiền": "Tổng tiền",
+    "tiền": "Tổng tiền",
+    "trạm": "Trạm",
+    "tên trạm": "Trạm",
+    "cột": "Cột",
+    "số cột": "Cột",
+    "sđt": "SĐT",
+    "điện thoại": "SĐT",
+    "đt": "SĐT",
+    "số điện thoại": "SĐT",
+}
 
+normalized_records = []
+for r in records_for_cashier:
+    new_row = {}
+    for k, v in r.items():
+        norm_k = normalize_text(k)
+        mapped_key = k
+        for pattern, standard_name in KEY_MAPPING.items():
+            if pattern in norm_k:
+                mapped_key = standard_name
+                break
+        new_row[mapped_key] = v
+
+    # Đảm bảo có cột Thu ngân để phân loại trên web
+    if "Thu ngân" not in new_row and "TNV" not in new_row:
+        new_row["Thu ngân"] = cashier
+
+    # Chuẩn hóa tiền tệ
+    if "Tổng tiền" in new_row:
+        new_row["Tổng tiền"] = format_money(new_row["Tổng tiền"])
+
+    # Chỉ nhận các dòng có mã khách hàng hợp lệ
+    if new_row.get("Mã khách hàng"):
+        normalized_records.append(new_row)
+
+all_records.extend(normalized_records)
 // =========================================================
 // PHẦN SỬA ĐỔI: TỔNG HỢP NỢ THEO 2 TỔ SẢN XUẤT (VŨ THƯ)
 // Phân tổ dựa theo MÃ THU NGÂN VIÊN (lấy từ file chia_tổ.txt)
